@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/convert_to_pdf_button"
+        android:title="Pdf"
+        android:icon="@drawable/pdf_icon"
+        app:showAsAction="ifRoom|collapseActionView"/>
+
+    <item
+        android:id="@+id/add_or_update_ok_button"
+        android:title="Add Or Update"
+        android:icon="@drawable/accept"
+        app:showAsAction="ifRoom|collapseActionView"/>
+</menu>

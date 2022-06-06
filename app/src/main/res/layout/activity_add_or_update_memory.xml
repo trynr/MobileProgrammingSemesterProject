@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/LightBlue"
+    android:id="@+id/memory_layout"
+    android:orientation="vertical"
+    tools:context=".Activities.AddOrUpdateMemoryActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/datePickerButton"
+                android:backgroundTint="@color/DodgerBlue"
+                android:text="JAN 01 2022"
+                android:textSize="20sp"
+                android:layout_margin="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="64dp"
+                    android:id="@+id/happyEmojiIcon"
+                    android:src="@drawable/happiness"/>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="64dp"
+                    android:id="@+id/sadEmojiIcon"
+                    android:src="@drawable/sad"/>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="64dp"
+                    android:id="@+id/angryEmojiIcon"
+                    android:src="@drawable/angry"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/titleEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_round"
+                android:hint="Title"
+                android:lines="1"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/memoryContentEt"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_round"
+                android:hint="What happened?"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:backgroundTint="@color/DodgerBlue"
+                android:layout_margin="10dp"
+                android:id="@+id/selectImageOrVideoButton"
+                android:text="Add image or video"
+                android:layout_height="wrap_content"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="256dp"
+                    android:visibility="gone"
+                    android:id="@+id/memoryImageIV"
+                    android:layout_height="256dp"/>
+
+                <VideoView
+                    android:layout_width="256dp"
+                    android:visibility="gone"
+                    android:layout_height="256dp"
+                    android:id="@+id/memoryVideoView"/>
+
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:id="@+id/memoryPasswordLayout"
+                android:layout_margin="5dp"
+                app:boxBackgroundColor="@color/white"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:id="@+id/memoryPasswordEt"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

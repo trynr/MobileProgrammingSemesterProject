@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".Activities.MemoryManagementActivity">
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:id="@+id/addMemoryButton"
+        android:text="Add Memory"
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/LightBlue"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/memoriesRecyclerView"
+        android:padding="10dp"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>
