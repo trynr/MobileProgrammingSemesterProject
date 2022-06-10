@@ -10,8 +10,9 @@
         <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/drawable/ic_share.xml" value="0.309375" />
         <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/drawable/orange_circle.xml" value="0.3828125" />
         <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/layout/activity_add_memory.xml" value="0.276268115942029" />
-        <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/layout/activity_add_or_update_memory.xml" value="0.33" />
+        <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/layout/activity_add_or_update_memory.xml" value="0.25" />
         <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/layout/activity_main.xml" value="0.29322916666666665" />
+        <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/layout/activity_maps.xml" value="0.21422101449275363" />
         <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/layout/activity_memory_management.xml" value="0.28306159420289856" />
         <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/layout/activity_update_memory.xml" value="0.276268115942029" />
         <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/layout/adapter_contact_item.xml" value="0.3138586956521739" />
@@ -21,6 +22,7 @@
         <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/layout/popup_password.xml" value="0.3197463768115942" />
         <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/layout/popup_set_password.xml" value="0.3197463768115942" />
         <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/menu/menu_add_or_update_memory.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/menu/menu_location.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/menu/menu_memory_management.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/mkere/AndroidStudioProjects/MobileProgrammingSemesterProject/app/src/main/res/xml/provider_paths.xml" value="0.20520833333333333" />
       </map>

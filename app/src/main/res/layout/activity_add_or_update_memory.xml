@@ -83,6 +83,13 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+            <Button
+                android:layout_width="match_parent"
+                android:backgroundTint="@color/DodgerBlue"
+                android:layout_margin="10dp"
+                android:id="@+id/selectLocationButton"
+                android:text="Select Location"
+                android:layout_height="wrap_content"/>
 
             <Button
                 android:layout_width="match_parent"

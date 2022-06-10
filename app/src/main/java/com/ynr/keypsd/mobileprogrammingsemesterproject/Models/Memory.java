@@ -3,6 +3,8 @@ package com.ynr.keypsd.mobileprogrammingsemesterproject.Models;
 import android.location.Location;
 import android.net.Uri;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,27 +17,31 @@ public class Memory implements Serializable {
     private String title;
     private String mainText;
     private String mediaUri;
+    private String latLng;
     private String password;
 
-    public Memory(int id, Date date, int mode, String title, String mainText, String mediaUri, String password) {
+    public Memory(int id, Date date, int mode, String title, String mainText, String mediaUri, LatLng latLng, String password) {
         this.id = id;
         this.date = date;
         this.mode = mode;
         this.title = title;
         this.mainText = mainText;
         this.mediaUri = mediaUri;
+        if(latLng != null)
+            this.latLng = latLng.latitude + ":" + latLng.longitude;
         this.password = password;
     }
 
-    public Memory(Date date, int mode, String title, String mainText, String mediaUri, String password) {
+    public Memory(Date date, int mode, String title, String mainText, String mediaUri, LatLng latLng, String password) {
         this.date = date;
         this.mode = mode;
         this.title = title;
         this.mainText = mainText;
         this.mediaUri = mediaUri;
+        if(latLng != null)
+            this.latLng = latLng.latitude + ":" + latLng.longitude;
         this.password = password;
     }
-
 
     /*
     public Memory(Date date, int mode, Location location, String title, String mainText, Uri mediaUri, String password) {
@@ -105,6 +111,18 @@ public class Memory implements Serializable {
 
     public void setMediaUri(String mediaUri) {
         this.mediaUri = mediaUri;
+    }
+
+    public LatLng getLatLng() {
+        if(latLng == null)
+            return null;
+
+        String[] coordinates = latLng.split(":");
+        return new LatLng(Double.parseDouble(coordinates[0]), Double.parseDouble(coordinates[1]));
+    }
+
+    public void setLatLng(LatLng latLngObject) {
+        this.latLng = latLngObject.latitude + ":" + latLngObject.longitude;
     }
 
     public String getPassword() {

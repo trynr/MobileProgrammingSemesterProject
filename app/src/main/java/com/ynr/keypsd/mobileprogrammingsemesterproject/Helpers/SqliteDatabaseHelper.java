@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.ynr.keypsd.mobileprogrammingsemesterproject.Models.Memory;
 import com.ynr.keypsd.mobileprogrammingsemesterproject.Utils.DbConstants;
 
@@ -61,13 +62,22 @@ public class SqliteDatabaseHelper {
 
             Date date = new Date(year, month, day);
             int mode = resultSet.getInt(2);
-            Location location = new Location(resultSet.getString(3));
+
+            String latLngStr = resultSet.getString(3);
+            LatLng latLng = null;
+
+            if(!latLngStr.equals("")){
+                String[] coordinates = latLngStr.split(":");
+                double latitude = Double.parseDouble(coordinates[0]);
+                double longitude = Double.parseDouble(coordinates[1]);
+                latLng = new LatLng(latitude, longitude);
+            }
             String title = resultSet.getString(4);
             String mainText = resultSet.getString(5);
             String mediaFileUri = resultSet.getString(6);
             String password = resultSet.getString(7);
 
-            memoryList.add(new Memory(id, date, mode, title, mainText, mediaFileUri, password));
+            memoryList.add(new Memory(id, date, mode, title, mainText, mediaFileUri, latLng, password));
         }
 
         return memoryList;
@@ -79,7 +89,12 @@ public class SqliteDatabaseHelper {
         ContentValues args = new ContentValues();
         args.put(DATE, date.getYear() + "-" + date.getMonth() + "-" + date.getDate());
         args.put(MODE, memory.getMode());
-        args.put(LOCATION, "LOCA");
+
+        String locationStr = "";
+        if(memory.getLatLng() != null)
+            locationStr = memory.getLatLng().latitude + ":" + memory.getLatLng().longitude;
+
+        args.put(LOCATION, locationStr);
         args.put(TITLE, memory.getTitle());
         args.put(MAIN_TEXT, memory.getMainText());
         args.put(MEDIA_FILE_URI, memory.getMediaUri());
@@ -98,7 +113,7 @@ public class SqliteDatabaseHelper {
         ContentValues args = new ContentValues();
         args.put(DATE, date.getYear() + "-" + date.getMonth() + "-" + date.getDate());
         args.put(MODE, memory.getMode());
-        args.put(LOCATION, "LOCA");
+        args.put(LOCATION, memory.getLatLng().latitude + ":" + memory.getLatLng().longitude);
         args.put(TITLE, memory.getTitle());
         args.put(MAIN_TEXT, memory.getMainText());
         args.put(MEDIA_FILE_URI, memory.getMediaUri());

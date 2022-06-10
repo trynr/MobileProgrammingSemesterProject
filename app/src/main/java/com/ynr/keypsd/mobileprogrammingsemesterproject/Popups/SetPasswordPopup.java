@@ -30,6 +30,7 @@ public class SetPasswordPopup implements View.OnClickListener {
     private EditText newPasswordEt;
     private TextView errorMessageTv;
     private Button setGeneralPasswordButton;
+    private Button removeGeneralPasswordButton;
     private boolean passwordPresent;
     private String currentPassword;
 
@@ -39,9 +40,11 @@ public class SetPasswordPopup implements View.OnClickListener {
         dialog.setContentView(R.layout.popup_set_password);
         define();
 
-        if(!passwordPresent) // Password hiç set edilmedi
+        if(!passwordPresent){
+            // Password hiç set edilmedi
             oldPasswordEt.setVisibility(View.GONE);
-
+            removeGeneralPasswordButton.setVisibility(View.GONE);
+        }
 
     }
 
@@ -51,14 +54,17 @@ public class SetPasswordPopup implements View.OnClickListener {
         newPasswordEt = dialog.findViewById(R.id.et_new_password);
         errorMessageTv = dialog.findViewById(R.id.error_message_tv);
         setGeneralPasswordButton = dialog.findViewById(R.id.set_general_password_button);
+        removeGeneralPasswordButton = dialog.findViewById(R.id.remove_general_password_button);
 
         closeIcon.setOnClickListener(this);
         setGeneralPasswordButton.setOnClickListener(this);
+        removeGeneralPasswordButton.setOnClickListener(this);
 
         mPrefs = activity.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         prefsEditor = mPrefs.edit();
         currentPassword = mPrefs.getString(GENERAL_PASSWORD, "");
         passwordPresent = !currentPassword.equals("");
+
 
     }
 
@@ -92,6 +98,20 @@ public class SetPasswordPopup implements View.OnClickListener {
             }
 
         }
+        else if(view.getId() == R.id.remove_general_password_button){
+            String oldPassword = oldPasswordEt.getText().toString();
+
+            if(passwordPresent && !oldPassword.equals(currentPassword)){
+                errorMessageTv.setVisibility(View.VISIBLE);
+                errorMessageTv.setText("Password is not correct.");
+            }
+            else{
+                errorMessageTv.setVisibility(View.GONE);
+                updatePassword("");
+                dialog.dismiss();
+            }
+
+        }
 
     }
 
@@ -99,4 +119,6 @@ public class SetPasswordPopup implements View.OnClickListener {
         prefsEditor.putString(GENERAL_PASSWORD, newPassword);
         prefsEditor.commit();
     }
+
+
 }

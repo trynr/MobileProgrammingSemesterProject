@@ -1,5 +1,7 @@
 package com.ynr.keypsd.mobileprogrammingsemesterproject.Activities;
 
+import static com.ynr.keypsd.mobileprogrammingsemesterproject.Activities.MapsActivity.LATITUDE;
+import static com.ynr.keypsd.mobileprogrammingsemesterproject.Activities.MapsActivity.LONGITUDE;
 import static com.ynr.keypsd.mobileprogrammingsemesterproject.Adapters.MemoryAdapter.MEMORY_OBJECT;
 import static com.ynr.keypsd.mobileprogrammingsemesterproject.Utils.RequestPermission.checkAndRequestReadExternalStoragePermission;
 import static com.ynr.keypsd.mobileprogrammingsemesterproject.Utils.RequestPermission.checkAndRequestWriteExternalStoragePermission;
@@ -25,6 +27,11 @@ import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.ynr.keypsd.mobileprogrammingsemesterproject.Enums.EnumSelectedMode;
@@ -38,12 +45,14 @@ import com.ynr.keypsd.mobileprogrammingsemesterproject.R;
 public class AddOrUpdateMemoryActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final int REQUEST_TAKE_FROM_GALLERY = 102;
+    public static final int REQUEST_SET_LOCATION = 103;
 
     private Button datePickerButton;
     private ImageView[] emojiIcons;
     private EditText titleEt;
     private EditText memoryContentEt;
     private Button selectImageOrVideoButton;
+    private Button selectLocationButton;
     private ImageView memoryImageIV;
     private VideoView memoryVideoView;
     private TextInputEditText memoryPasswordEt;
@@ -56,6 +65,7 @@ public class AddOrUpdateMemoryActivity extends AppCompatActivity implements View
     private EnumSelectedMode selectedMode;
     private Uri selectedUri;
     private int currentMemoryId;
+    private LatLng selectedLatLng;
 
     private enum EnumAddOrUpdate{
         ADD,
@@ -103,7 +113,9 @@ public class AddOrUpdateMemoryActivity extends AppCompatActivity implements View
                 }
             }
 
-            memoryPasswordEt.setText(memory.getPassword());
+            selectedLatLng = memory.getLatLng();
+            if(selectedLatLng != null)
+                selectLocationButton.setText("Show Location");
 
         }
         else{ // add
@@ -154,6 +166,7 @@ public class AddOrUpdateMemoryActivity extends AppCompatActivity implements View
                                      findViewById(R.id.angryEmojiIcon)};
 
         selectImageOrVideoButton = findViewById(R.id.selectImageOrVideoButton);
+        selectLocationButton = findViewById(R.id.selectLocationButton);
         memoryImageIV = findViewById(R.id.memoryImageIV);
         memoryVideoView = findViewById(R.id.memoryVideoView);
         memoryPasswordEt = findViewById(R.id.memoryPasswordEt);
@@ -164,6 +177,7 @@ public class AddOrUpdateMemoryActivity extends AppCompatActivity implements View
 
         datePickerButton.setOnClickListener(this);
         selectImageOrVideoButton.setOnClickListener(this);
+        selectLocationButton.setOnClickListener(this);
 
         selectedUri = Uri.parse("");
         pdfHelper = new PdfHelper(AddOrUpdateMemoryActivity.this);
@@ -181,6 +195,14 @@ public class AddOrUpdateMemoryActivity extends AppCompatActivity implements View
                 startActivityForResult(intent , REQUEST_TAKE_FROM_GALLERY);
             }
         }
+        else if(view.getId() == R.id.selectLocationButton){
+            Intent intent = new Intent(AddOrUpdateMemoryActivity.this, MapsActivity.class);
+            if(selectedLatLng != null){
+                intent.putExtra(LATITUDE, selectedLatLng.latitude);
+                intent.putExtra(LONGITUDE, selectedLatLng.longitude);
+            }
+            startActivityForResult(intent, REQUEST_SET_LOCATION);
+        }
     }
 
     @Override
@@ -193,20 +215,26 @@ public class AddOrUpdateMemoryActivity extends AppCompatActivity implements View
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
 
+                if(titleEt.getText().toString().equals("")){
+                    Toast.makeText(AddOrUpdateMemoryActivity.this, "Title field cannot be empty!", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+
                 Memory memory = new Memory(
                         dateHelper.getCurrentSelectedDate(),
                         getModeAsInteger(selectedMode),
                         titleEt.getText().toString(),
                         memoryContentEt.getText().toString(),
                         selectedUri.toString(),
+                        selectedLatLng,
                         memoryPasswordEt.getText().toString());
 
                 if(addOrUpdate == EnumAddOrUpdate.UPDATE){
                     memory.setId(currentMemoryId);
                     databaseHelper.updateMemory(memory);
-                    Toast.makeText(AddOrUpdateMemoryActivity.this, "Anı güncellendi!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddOrUpdateMemoryActivity.this, "Memory updated!", Toast.LENGTH_SHORT).show();
                 } else{
-                    Toast.makeText(AddOrUpdateMemoryActivity.this, "Anı eklendi!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddOrUpdateMemoryActivity.this, "Memory added!", Toast.LENGTH_SHORT).show();
                     databaseHelper.insertMemory(memory);
                 }
 
@@ -228,10 +256,12 @@ public class AddOrUpdateMemoryActivity extends AppCompatActivity implements View
 
                 selectImageOrVideoButton.setVisibility(View.GONE);
                 memoryPasswordLayout.setVisibility(View.GONE);
+                selectLocationButton.setVisibility(View.GONE);
 
                 Bitmap bitmap = PdfHelper.loadBitmap(memoryLayout, memoryLayout.getWidth(), memoryLayout.getHeight());
                 pdfHelper.createAndOpenPdf(bitmap, titleEt.getText().toString());
 
+                selectLocationButton.setVisibility(View.VISIBLE);
                 selectImageOrVideoButton.setVisibility(View.VISIBLE);
                 memoryPasswordLayout.setVisibility(View.VISIBLE);
 
@@ -277,6 +307,16 @@ public class AddOrUpdateMemoryActivity extends AppCompatActivity implements View
                                 .show();
                     }
 
+                }
+                break;
+            case REQUEST_SET_LOCATION:
+                if(resultCode == RESULT_OK){
+                    double latitude = data.getDoubleExtra(LATITUDE, 0.0);
+                    double longitude = data.getDoubleExtra(LONGITUDE, 0.0);
+                    if(latitude != 0.0F || longitude != 0.0F){
+                        selectedLatLng = new LatLng(latitude, longitude);
+                        selectLocationButton.setText("Show Location");
+                    }
                 }
                 break;
         }

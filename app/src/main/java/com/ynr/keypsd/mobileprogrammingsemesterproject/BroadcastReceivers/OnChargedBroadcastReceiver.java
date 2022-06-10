@@ -20,10 +20,11 @@ public class OnChargedBroadcastReceiver extends android.content.BroadcastReceive
         int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
         boolean isCharging = status == BATTERY_STATUS_CHARGING || status == BATTERY_STATUS_FULL;
 
-        Toast.makeText(context, "isCharging: " + isCharging, Toast.LENGTH_SHORT).show();
-
-        if(isCharging)
-            FirebaseDatabaseHelper.backupMemoriesInFirebaseDatabase(context);
+        //Toast.makeText(context, "isCharging: " + isCharging, Toast.LENGTH_SHORT).show();
+        return;
+        // TODO kaldır
+        //if(isCharging)
+          //  FirebaseDatabaseHelper.backupMemoriesInFirebaseDatabase(context);
 
     }
 }
