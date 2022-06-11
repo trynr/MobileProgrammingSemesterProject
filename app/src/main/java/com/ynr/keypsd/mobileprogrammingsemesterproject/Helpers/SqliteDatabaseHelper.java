@@ -113,7 +113,10 @@ public class SqliteDatabaseHelper {
         ContentValues args = new ContentValues();
         args.put(DATE, date.getYear() + "-" + date.getMonth() + "-" + date.getDate());
         args.put(MODE, memory.getMode());
-        args.put(LOCATION, memory.getLatLng().latitude + ":" + memory.getLatLng().longitude);
+        if(memory.getLatLng() != null)
+            args.put(LOCATION, memory.getLatLng().latitude + ":" + memory.getLatLng().longitude);
+        else
+            args.put(LOCATION, "");
         args.put(TITLE, memory.getTitle());
         args.put(MAIN_TEXT, memory.getMainText());
         args.put(MEDIA_FILE_URI, memory.getMediaUri());
