@@ -3,6 +3,9 @@ package com.ynr.keypsd.mobileprogrammingsemesterproject.Activities;
 import static com.ynr.keypsd.mobileprogrammingsemesterproject.Activities.MapsActivity.LATITUDE;
 import static com.ynr.keypsd.mobileprogrammingsemesterproject.Activities.MapsActivity.LONGITUDE;
 import static com.ynr.keypsd.mobileprogrammingsemesterproject.Adapters.MemoryAdapter.MEMORY_OBJECT;
+import static com.ynr.keypsd.mobileprogrammingsemesterproject.Enums.EnumSelectedMode.ANGRY;
+import static com.ynr.keypsd.mobileprogrammingsemesterproject.Enums.EnumSelectedMode.HAPPY;
+import static com.ynr.keypsd.mobileprogrammingsemesterproject.Enums.EnumSelectedMode.SAD;
 import static com.ynr.keypsd.mobileprogrammingsemesterproject.Utils.RequestPermission.checkAndRequestReadExternalStoragePermission;
 import static com.ynr.keypsd.mobileprogrammingsemesterproject.Utils.RequestPermission.checkAndRequestWriteExternalStoragePermission;
 
@@ -113,6 +116,8 @@ public class AddOrUpdateMemoryActivity extends AppCompatActivity implements View
                 }
             }
 
+            selectedMode = intToSelectedMode(memory.getMode());
+            selectedUri = Uri.parse(memory.getMediaUri());
             selectedLatLng = memory.getLatLng();
             if(selectedLatLng != null)
                 selectLocationButton.setText("Show Location");
@@ -127,7 +132,7 @@ public class AddOrUpdateMemoryActivity extends AppCompatActivity implements View
 
     private void setEmojiIcons() {
         // set default emoji
-        selectedMode = EnumSelectedMode.HAPPY;
+        selectedMode = HAPPY;
         ImageHelper.applyGrayscaleFilterToAllImageViews(emojiIcons);
         emojiIcons[0].clearColorFilter();
 
@@ -143,8 +148,8 @@ public class AddOrUpdateMemoryActivity extends AppCompatActivity implements View
     private EnumSelectedMode getModeFromEmoji(int id){
 
         switch (id){
-            case R.id.happyEmojiIcon: return EnumSelectedMode.HAPPY;
-            case R.id.sadEmojiIcon:   return EnumSelectedMode.SAD;
+            case R.id.happyEmojiIcon: return HAPPY;
+            case R.id.sadEmojiIcon:   return SAD;
             case R.id.angryEmojiIcon: return EnumSelectedMode.ANGRY;
             default: throw new IllegalArgumentException("Illegal argument for view id: " + id);
         }
@@ -155,6 +160,15 @@ public class AddOrUpdateMemoryActivity extends AppCompatActivity implements View
             case HAPPY: return 0;
             case SAD:   return 1;
             case ANGRY: return 2;
+            default:    throw new IllegalArgumentException("Invalid mode : " + selectedMode.name());
+        }
+    }
+
+    private EnumSelectedMode intToSelectedMode(int emojiId){
+        switch (emojiId){
+            case 0:     return HAPPY;
+            case 1:     return SAD;
+            case 2:     return ANGRY;
             default:    throw new IllegalArgumentException("Invalid mode : " + selectedMode.name());
         }
     }
